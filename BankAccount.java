@@ -34,12 +34,20 @@ public class BankAccount {
     }
 
     public void add_amount(double amount) {
+        if (amount < 0) {
+            history.add("Попытка добавить на счёт №" + getId() + " отрицательную сумму " + amount + ".");
+            throw new IllegalArgumentException("Сумма пополнения не может быть отрицательной: " + amount);
+        }
         balance += amount;
         history.add("Добавлено на счёт №"+ getId() + ": " + amount + ".");
     }
 
     public void substract_amount(double amount) {
-        if (amount <= balance) {
+        if (amount < 0) {
+            history.add("Попытка снять со счёта №" + getId() + " отрицательную сумму " + amount + ".");
+            throw new IllegalArgumentException("Сумма снятия не может быть отрицательной: " + amount);
+        }
+        else if (amount <= balance) {
             balance -= amount;
             history.add("Снято со счёта №"+ getId() + ": " + amount + ".");
         }
